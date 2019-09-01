@@ -33,16 +33,16 @@ class UserTest < ActiveSupport::TestCase
 
   test "email validation should accept valid addresses" do
     valid_addresses  = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
-    first.last@foo.jp alice+bob@baz.cn]
+    first.last@foo.jp alice+bob@baz.cn] #大文字小文字が混合してても有効にする
     valid_addresses.each do |valid_address|
       @user.email = valid_address
-      assert @user.valid?,"#{valid_address.inspect}should be valid"
+      assert @user.valid?,"#{valid_address.inspect} should be valid"
     end
   end
 
   test "email validation should reject invalid addresses" do
     invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
-    foo@bar_baz.com foo@bar+baz.com]
+    foo@bar_baz.com foo@bar+baz.com] #「,」「_」などは無効にする
     invalid_addresses.each do |invalid_address|
       @user.email = invalid_addresses
       assert_not @user.valid?,"#{invalid_address.inspect} should be invalid"
@@ -50,14 +50,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "email addresses should be unique" do
-    duplicate_user = @user.dup
+    duplicate_user = @user.dup # 「dup」はデータを複製するメソッド
     duplicate_user.email = @user.email.upcase
     @user.save
     assert_not duplicate_user.valid?
   end
 
   test "password should be present (nonblank)" do
-    @user.password = @user.password_confirmation = " " * 6
+    @user.password = @user.password_confirmation = " " * 6 #パスワードと確認を同時に代入する
     assert_not @user.valid?
   end
 

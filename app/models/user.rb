@@ -1,12 +1,16 @@
 class User < ApplicationRecord 
+<<<<<<< HEAD
   attr_accessor :remember_token
     before_save {self.email = email.downcase}
+=======
+    before_save {self.email = email.downcase} #大文字も小文字も同じものとする
+>>>>>>> modeling-users
     validates :name,  presence: true, length: { maximum: 50 }
-    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i #正規表示
     validates :email, presence: true, length: { maximum: 255 },
                       format: { with: VALID_EMAIL_REGEX },
                       uniqueness: {case_sensitive: false}
-    has_secure_password
+    has_secure_password #「password_digest」「bcrypt」で使える魔術的なメソッド
     validates :password, presence: true, length:{minimum:6}
 
   # 渡された文字列のハッシュ値を返す
