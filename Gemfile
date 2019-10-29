@@ -6,7 +6,7 @@ ruby '2.3.7'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
 
-gem 'bootstrap-sass','3.3.7'
+gem 'bootstrap-sass','3.4.1'
 gem 'autoprefixer-rails'
 
 gem 'rails-controller-testing'
